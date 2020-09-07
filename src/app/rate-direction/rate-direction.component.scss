@@ -1,0 +1,33 @@
+@import '~bootstrap/scss/bootstrap';
+
+:host {
+  display: inline-block;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.circle,
+.up,
+.down {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: top;
+}
+
+.circle {
+  background: $gray-400;
+  border-radius: 50%;
+}
+
+.up {
+  border-style: solid;
+  border-width: 0 8px 16px 8px;
+  border-color: transparent transparent $success transparent;
+}
+
+.down {
+  border-style: solid;
+  border-width: 16px 8px 0 8px;
+  border-color: $danger transparent transparent transparent;
+}
