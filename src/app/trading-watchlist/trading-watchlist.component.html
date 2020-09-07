@@ -1,0 +1,72 @@
+<div class="position-relatve">
+  <table class="table table-sm mb-0">
+    <tr>
+      <th>Symbol</th>
+      <th class="w-25 text-right">Bid</th>
+      <th class="w-25 text-right">Ask</th>
+    </tr>
+    <tr
+      *ngFor="let rate of rates"
+      (contextmenu)="contextMenuOpen($event, rate)"
+    >
+      <td>
+        <app-rate-direction [rate]="rate.ask$ | async"></app-rate-direction>
+        <span class="align-middle ml-2">{{ rate.symbol }}</span>
+      </td>
+      <td class="w-25 text-right">
+        <app-rate-text [rate]="rate.bid$ | async"></app-rate-text>
+      </td>
+      <td class="w-25 text-right">
+        <app-rate-text [rate]="rate.ask$ | async"></app-rate-text>
+      </td>
+    </tr>
+    <tr *ngIf="!rates.length">
+      <td colspan="3" class="text-center">
+        No items to show.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="toggleRateForm()"
+          *ngIf="!rateFormOpened"
+        >Add</button>
+        <form (submit)="addRate($event)" *ngIf="rateFormOpened">
+          <div class="input-group">
+            <input
+              #symbolInput
+              type="text"
+              class="form-control"
+              [class.is-invalid]="symbolError"
+              name="symbol"
+              [(ngModel)]="symbol"
+            >
+            <div class="input-group-append">
+              <button
+                type="button"
+                class="btn btn-danger font-weight-bold"
+                (click)="toggleRateForm()"
+              >&times;</button>
+              <button
+                type="submit"
+                class="btn btn-success font-weight-bold"
+              >+</button>
+            </div>
+          </div>
+          <small class="text-danger" *ngIf="symbolError">
+            {{ symbolError }}
+          </small>
+        </form>
+      </td>
+      <td colspan="2"></td>
+    </tr>
+  </table>
+
+  <app-context-menu
+    #contextMenu
+    [items]="contextMenuItems"
+    (itemClick)="contextMenuItemClick($event)"
+  ></app-context-menu>
+</div>
